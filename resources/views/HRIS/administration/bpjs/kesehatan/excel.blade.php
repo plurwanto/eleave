@@ -1,0 +1,115 @@
+<div class="modal-header portlet box">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-pencil-square-o"></i>{{$title}}</div>
+        <div class="tools">
+            <a href="#" data-dismiss="modal" class="remove"> </a>
+        </div>
+    </div>
+</div>
+<form id="formInput" action="{{ URL::asset(env('APP_URL').'/hris/administration/bpjs/kesehatan') }}" method="get"  class="form form-horizontal">
+    <div class="modal-body">
+        <!-- BEGIN PAGE CONTENT INNER -->
+        <div class="page-content-inner">
+            <div class="row">
+                    <!-- BEGIN SAMPLE FORM PORTLET-->
+                    <div class="portlet light ">
+                        <div class="portlet-body">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Date <font color="red">*</font></label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" name="month">
+                                            @php
+                                            $month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                                            $month_num = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+                                            for ($i = 0; $i < count($month); $i++) {
+                                                if ($month_num[$i] == $searchMonth) {
+                                                    echo '<option value="' . $month_num[$i] . '" selected>' . $month[$i] . '</option>';
+                                                } else {
+                                                    echo '<option value="' . $month_num[$i] . '">' . $month[$i] . '</option>';
+                                                }
+                                            }
+                                            @endphp
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input class="form-control" type="number" name="year" value="{{$searchYear}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END SAMPLE FORM PORTLET-->
+            </div>
+        </div>
+    <!-- END PAGE CONTENT INNER -->
+    </div>
+    <div class="modal-footer">
+        @php
+            if($period !=0){
+                echo '<a href="'. URL::asset(env('APP_URL').'/hris/administration/bpjs/kesehatan').'?month='. substr($period,5,7s) .'&year='. substr($period,0,4) .'" type="button" class="btn dark btn-outline">Close</a>';
+            }else{
+                echo '<a href="'. URL::asset(env('APP_URL').'/hris/administration/bpjs/kesehatan') .'" type="button" class="btn dark btn-outline">Close</a>';
+            }
+        @endphp
+        <button type="submit" class="btn green" id="btnSubmit">Filter</button>
+    </div>
+</form>
+
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="{{ URL::asset(env('GLOBAL_PLUGIN_PATH').'select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{{ URL::asset(env('PAGES_SCRIPT_PATH').'components-select2.min.js') }}" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="{{ URL::asset(env('GLOBAL_PLUGIN_PATH').'jquery-validation/js/jquery.validate.min.js') }}" type="text/javascript"></script>
+<script src="{{ URL::asset(env('GLOBAL_PLUGIN_PATH').'jquery-validation/js/additional-methods.min.js') }}" type="text/javascript"></script>
+<script src="{{ URL::asset(env('GLOBAL_PLUGIN_PATH').'bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{{ URL::asset(env('PAGES_SCRIPT_PATH').'form-validation.min.js') }}" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#formInput').validate({
+                rules: {
+                    cus_id : {
+                        required: true
+                    },
+                    month : {
+                        required: true
+                    },
+                    year: {
+                        required: true
+                    }
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: 'span',
+                errorClass: 'help-block',
+                errorPlacement: function (error, element) {
+                    if (element.parent('.input-group').length) {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            });
+        });
+
+
+
+    $(function() {
+        $( "#date-picker" ).datepicker();
+    });
+</script>

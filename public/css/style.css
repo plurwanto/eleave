@@ -1,0 +1,27 @@
+.nav.side-menu>li.active,
+.nav.side-menu>li.current-page {
+    border-right: 5px solid #83a4d4;
+}
+
+.site_title {
+    line-height: 20px;
+    padding-top: 15px;
+}
+
+.site_title img {
+    width: 50px;
+    height: 40px;
+    float: left;
+}
+
+.site_title .title_text {
+    font-weight: bold
+}
+
+#document {
+    text-align: right;
+}
+
+#addModal {
+    text-align: left;
+}
